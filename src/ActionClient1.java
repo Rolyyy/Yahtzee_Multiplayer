@@ -28,8 +28,8 @@ public class ActionClient1 {
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String fromServer;
         String fromUser;
-
-        System.out.println("Connected to Server as " + ActionClientID);
+        
+        System.out.println(""); System.out.println("Connected to server!"); System.out.println("");
         
         // This is modified as it's the client that speaks first
 
@@ -41,7 +41,9 @@ public class ActionClient1 {
                 out.println(fromUser);
             }
             fromServer = in.readLine();
+            //Check message from server
             System.out.println(fromServer);
+            System.out.println("");
         }
             
         
