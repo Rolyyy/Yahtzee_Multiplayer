@@ -68,7 +68,7 @@ public class SharedActionState{
     			if (myThreadName.equals("ActionServerThread1")) {
     				if(mySharedVariable == p1rounds) {
     				
-    				p1score = p1score + int_input;
+    				p1score = int_input;
     				System.out.println("Shared round: " + mySharedVariable);
     				theOutput =  "P1 Round: " + p1rounds +  "| score: " + p1score + "| enemy score:" + p2score;
     				p1rounds++;
@@ -83,7 +83,7 @@ public class SharedActionState{
     			else if (myThreadName.equals("ActionServerThread2")) {
     				if(mySharedVariable == p2rounds) {
         				
-        				p2score = p2score + int_input;
+        				p2score = int_input;
         				System.out.println("Shared round: " + mySharedVariable);
         				theOutput =  "P2 Round: " + p2rounds +  "| score: " + p2score + "| enemy score:" + p1score;
         				p2rounds++;

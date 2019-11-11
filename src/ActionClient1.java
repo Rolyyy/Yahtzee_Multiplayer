@@ -46,13 +46,14 @@ public class ActionClient1 {
 	    int[] rerollDice = new int[5];
 	    int rerollDie = 0;
         
-        
+        int round = 1;
 
         while (true) {
-        	int round = 1;
-        	System.out.println("___");
+  
+        	System.out.println("_____________________");
 	    	System.out.println("Round " + round + " of 13" );
-	    	System.out.println("Current score is " + currentScore);
+	    	//System.out.println("Current score is " + currentScore);
+	    	System.out.println("");
 	    	System.out.println("Your current scoring status is:");
 	    	currentScore = showCurrentScore(currentScoreRecord);
 	    	
@@ -103,20 +104,24 @@ public class ActionClient1 {
             
 	    	
 	    	
-	    	fromUser = stdIn.readLine();
-            if (fromUser != null) {
-               // System.out.println(ActionClientID + " sending " + fromUser + " to ActionServer");
+	    	//fromUser = stdIn.readLine();
+           // if (fromUser != null) {
+              
             	
             	//!! Sending currentScore variable from this line to the server:
             	//System.out.println("Current score is " + currentScore);
             	
-                out.println(currentScore);
-            }
+               // out.println(currentScore);
+                out.println(showCurrentScore(currentScoreRecord));
+            
+           // }
+                
             fromServer = in.readLine();
             //Check message from server
-            System.out.println(fromServer);
             System.out.println("");
-            
+            System.out.println("FROM SERVER: " + fromServer);
+            System.out.println("");
+            round++;
             
         }
             
@@ -165,6 +170,7 @@ public class ActionClient1 {
 	}
     
 	private static void showDice(int[] theseDice) {
+		  System.out.println("");
 	      System.out.println("You rolled: " + theseDice[0] + " " + theseDice[1] + " "+ theseDice[2] + " "+ theseDice[3] + " " + theseDice[4]);
 	}//showDice
 	
@@ -176,7 +182,7 @@ public class ActionClient1 {
 
 		//Calculate current score
 		for (int i=0; i<currentScoreRecord.length; i++) {
-			score = score + currentScoreRecord[i][1];
+			score = score + currentScoreRecord[i][1]; 
 		}//endfor
 		//Show what's been scored
 	    for (int i=0; i<13; i++) {
@@ -506,7 +512,9 @@ public class ActionClient1 {
 	    }
 
 	    //Choose and update score
+	    System.out.println("");
 	    choice = inputInt("Choose one choice!");
+	    System.out.println("");
 		System.out.println("You have chosen " + options[choice]);
 		System.out.println("");
 		newScoreRecord[choice][0] = 1;
