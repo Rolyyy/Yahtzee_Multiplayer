@@ -1,9 +1,9 @@
 import java.net.*;
 import java.io.*;
 
-public class SharedActionState{
+public class YahtzeeSharedState{
 	
-	private SharedActionState mySharedObj;
+	private YahtzeeSharedState mySharedObj;
 	private String myThreadName;
 	private double mySharedVariable;
 	private boolean accessing=false; // true a thread has a lock, false otherwise
@@ -14,8 +14,7 @@ public class SharedActionState{
 	private int p2score=0;
 	
 // Constructor	
-	
-	SharedActionState(double SharedVariable) {
+	YahtzeeSharedState(double SharedVariable) {
 		mySharedVariable = SharedVariable;
 	}
 
@@ -63,9 +62,10 @@ public class SharedActionState{
     		int int_input = Integer.parseInt(theInput);
     		
     		if(mySharedVariable<13) {
-    		if (int_input > -1 && int_input < 51) {
+    		if (int_input > -1) {
     			//Correct request
     			if (myThreadName.equals("ActionServerThread1")) {
+    				if(p1rounds < 14) {
     				if(mySharedVariable == p1rounds) {
     				
     				p1score = int_input;
@@ -74,8 +74,12 @@ public class SharedActionState{
     				p1rounds++;
     				IncrementGlobalRoundCheck();
     				}
-    				else {
+    					else {
     					theOutput = "please wait for other players to catch up!";
+    					}
+    				}
+    				else {
+    					theOutput = "p1_roundlimit";
     				}
     			}
     			

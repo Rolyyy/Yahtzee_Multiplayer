@@ -3,16 +3,16 @@ import java.net.*;
 import java.io.*;
 
 
-public class ActionServerThread extends Thread {
+public class YahtzeeServerThread extends Thread {
 
 	
   private Socket actionSocket = null;
-  private SharedActionState mySharedActionStateObject;
+  private YahtzeeSharedState mySharedActionStateObject;
   private String myActionServerThreadName;
   private double mySharedVariable;
    
   //Setup the thread
-  	public ActionServerThread(Socket actionSocket, String ActionServerThreadName, SharedActionState SharedObject) {
+  	public YahtzeeServerThread(Socket actionSocket, String ActionServerThreadName, YahtzeeSharedState SharedObject) {
 	
 //	  super(ActionServerThreadName);
 	  this.actionSocket = actionSocket;
