@@ -13,9 +13,12 @@ public class YahtzeeSharedState{
 	private int p1score=0;
 	private int p2score=0;
 	
+	private boolean p1finish= false;
+	private boolean p2finish= false;
+	
 // Constructor	
 	YahtzeeSharedState(double SharedVariable) {
-		mySharedVariable = SharedVariable;
+		mySharedVariable = SharedVariable; //In this case, this is the Global round check. This is to keep players on the same count.
 	}
 
 //Attempt to aquire a lock
@@ -59,9 +62,38 @@ public class YahtzeeSharedState{
     		//System.out.println(myThreadName + " received "+ theInput);
     		String theOutput = null;
     		
-    		int int_input = Integer.parseInt(theInput);
+    		if(theInput.equals("OVER") ) {
+    			System.out.println("'OVER' if loop run!");
+    			if (myThreadName.equals("ActionServerThread1")) {
+    				p1finish = true;
+    			}
+    			if (myThreadName.equals("ActionServerThread2")) {
+    				p2finish = true;
+    			}
+    			if(p1finish = true && p2finish == true) {
+    				String winner = winnerCheck();
+    				if(winner == "p1") {
+    					theOutput = "Player 1 has WON with " + p1score + " points ! P2 finished with " + p2score + ".";
+    					System.out.println(theOutput);
+    		    		return theOutput;
+    				}
+    				else {
+    					theOutput = "Player 2 has WON with " + p2score + " points ! P1 finished with " + p1score + ".";
+    					System.out.println(theOutput);
+    		    		return theOutput;
+    				}
+    			}
+    			else {
+    				theOutput = "not all players have finished...";
+    				System.out.println(theOutput);
+    	    		return theOutput;
+    			}
+    			
+    			
+    		}
     		
-    		if(mySharedVariable<13) {
+    		int int_input = Integer.parseInt(theInput);
+    		if(mySharedVariable<14) {
     		if (int_input > -1) {
     			//Correct request
     			if (myThreadName.equals("ActionServerThread1")) {
@@ -75,7 +107,7 @@ public class YahtzeeSharedState{
     				IncrementGlobalRoundCheck();
     				}
     					else {
-    					theOutput = "please wait for other players to catch up!";
+    					theOutput = "mismatch"; //Letting client know player is ahead of other players
     					}
     				}
     				else {
@@ -94,17 +126,15 @@ public class YahtzeeSharedState{
         				IncrementGlobalRoundCheck();
         				}
         				else {
-        					theOutput = "please wait for other players to catch up!";
+        					theOutput = "mismatch"; //Letting client know player is ahead of other players
         				}
     				}
     			
     			
        			else if (myThreadName.equals("ActionServerThread3")) {}
     			
-       			else if (myThreadName.equals("ActionServerThread4")) {
-    				
-    				System.out.println(myThreadName + " made contact " + mySharedVariable);
-    				theOutput = "Do action completed.  Shared Variable now = " + mySharedVariable;}
+       			
+    			
     			
        			else {System.out.println("Error - thread call not recognised.");}
     		}
@@ -125,6 +155,21 @@ public class YahtzeeSharedState{
 				mySharedVariable++;
 			}
 			
-		}	
+		}
+		
+		public String winnerCheck() {
+			
+			String winner;
+			
+			if(p1score>p2score) {
+				winner = "p1";
+				return winner;
+			}
+			else {
+				winner = "p2";
+				return winner;
+			}
+			
+		}
 }
 

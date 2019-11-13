@@ -5,10 +5,11 @@ import java.util.Random;
 import java.util.*;
 public class YahtzeeClient {
     public static void main(String[] args) throws IOException {
+    	
+    	
+    	
 
         // Set up the socket, in and out variables
-
-   
         Socket ActionClientSocket = null;
         PrintWriter out = null;
         BufferedReader in = null;
@@ -48,7 +49,6 @@ public class YahtzeeClient {
 	    int rerollDie = 0;
         
         int round = 1;
-
         while (true) {
   
         	System.out.println("_____________________");
@@ -107,24 +107,42 @@ public class YahtzeeClient {
 	    	
 	    	//fromUser = stdIn.readLine();
            // if (fromUser != null) {
-              
+	    	 // }
+	    	System.out.println("");
+	    	
+	    	//need to move this to get last round counted in score??
+	    	while(round>=13) {
+	    		System.out.println("You've finished your rounds! Press ENTER to check game status.");
+	    		fromUser = stdIn.readLine(); //Variable not important, just pressing ENTER from user...
+	    		
+	    		out.println("OVER");
+	    		fromServer = in.readLine();
+	    		System.out.println("");
+	    		System.out.println("FROM SERVER: " + fromServer);
+	    		 System.out.println("");
+	    	}
             	
-            	//!! Sending currentScore variable from this line to the server:
-            	//System.out.println("Current score is " + currentScore);
-            	
-               // out.println(currentScore);
-                out.println(showCurrentScore(currentScoreRecord));
             
-           // }
-                
+            out.println(showCurrentScore(currentScoreRecord));
+         
             fromServer = in.readLine();
             //Check message from server
-            System.out.println("");
+            
+            while(fromServer.equals("mismatch")) {
+            	System.out.println("You're ahead of other players. Press ENTER to send score again.");
+            	fromUser = stdIn.readLine(); //Variable not important, just pressing ENTER from user...
+            	out.println(showCurrentScore(currentScoreRecord));
+            	fromServer = in.readLine();
+            }
+            
+            
             System.out.println("FROM SERVER: " + fromServer);
             System.out.println("");
             round++;
             
         }
+        
+        //System.out.println("Reached round limit... what now???"); //delete when solved :)
             
         
        // Tidy up - not really needed due to true condition in while loop
