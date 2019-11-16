@@ -69,13 +69,13 @@ public class YahtzeeSharedState{
     		
     		if(theInput.equals("OVER") ) {
     			System.out.println("'OVER' if loop run!");
-    			if (myThreadName.equals("ActionServerThread1")) {
+    			if (myThreadName.equals("YahtzeeServerThread1")) {
     				p1finish = true;
     			}
-    			if (myThreadName.equals("ActionServerThread2")) {
+    			if (myThreadName.equals("YahtzeeServerThread2")) {
     				p2finish = true;
     			}
-    			if (myThreadName.equals("ActionServerThread3")) {
+    			if (myThreadName.equals("YahtzeeServerThread3")) {
     				p3finish = true;
     			}
     			
@@ -126,7 +126,7 @@ public class YahtzeeSharedState{
     		if(mySharedVariable<14) {
     		if (int_input > -1) {
     			//Correct request
-    			if (myThreadName.equals("ActionServerThread1")) {
+    			if (myThreadName.equals("YahtzeeServerThread1")) {
     				
     				if(mySharedVariable == p1rounds) {
     				
@@ -143,7 +143,7 @@ public class YahtzeeSharedState{
     			}
     			
     			
-    			else if (myThreadName.equals("ActionServerThread2")) {
+    			else if (myThreadName.equals("YahtzeeServerThread2")) {
     				
     				if(mySharedVariable == p2rounds) {
         				
@@ -159,7 +159,7 @@ public class YahtzeeSharedState{
     				}
     			
     			
-       			else if (myThreadName.equals("ActionServerThread3")) {
+       			else if (myThreadName.equals("YahtzeeServerThread3")) {
        				
        					if(mySharedVariable == p3rounds) {
         				
@@ -187,7 +187,7 @@ public class YahtzeeSharedState{
     		else {
     			theOutput = "GAME OVER!";
     		}
-     		//Return the output message to the ActionServer
+     		//Return the output message to the YahtzeeServer
     		System.out.println(theOutput);
     		return theOutput;
     	}

@@ -6,25 +6,25 @@ import java.io.*;
 public class YahtzeeServerThread extends Thread {
 
 	
-  private Socket actionSocket = null;
-  private YahtzeeSharedState mySharedActionStateObject;
-  private String myActionServerThreadName;
+  private Socket YahtzeeSocket = null;
+  private YahtzeeSharedState mySharedYahtzeeStateObject;
+  private String myYahtzeeServerThreadName;
   private double mySharedVariable;
    
   //Setup the thread
-  	public YahtzeeServerThread(Socket actionSocket, String ActionServerThreadName, YahtzeeSharedState SharedObject) {
+  	public YahtzeeServerThread(Socket YahtzeeSocket, String YahtzeeServerThreadName, YahtzeeSharedState SharedObject) {
 	
-//	  super(ActionServerThreadName);
-	  this.actionSocket = actionSocket;
-	  mySharedActionStateObject = SharedObject;
-	  myActionServerThreadName = ActionServerThreadName;
+//	  super(YahtzeeServerThreadName);
+	  this.YahtzeeSocket = YahtzeeSocket;
+	  mySharedYahtzeeStateObject = SharedObject;
+	  myYahtzeeServerThreadName = YahtzeeServerThreadName;
 	}
 
   public void run() {
     try {
-      System.out.println(myActionServerThreadName + "initialising.");
-      PrintWriter out = new PrintWriter(actionSocket.getOutputStream(), true);
-      BufferedReader in = new BufferedReader(new InputStreamReader(actionSocket.getInputStream()));
+      System.out.println(myYahtzeeServerThreadName + "initialising.");
+      PrintWriter out = new PrintWriter(YahtzeeSocket.getOutputStream(), true);
+      BufferedReader in = new BufferedReader(new InputStreamReader(YahtzeeSocket.getInputStream()));
       String inputLine, outputLine;
       
      
@@ -33,10 +33,10 @@ public class YahtzeeServerThread extends Thread {
       while ((inputLine = in.readLine()) != null) {
     	  // Get a lock first
     	  try { 
-    		  mySharedActionStateObject.acquireLock();  
-    		  outputLine = mySharedActionStateObject.processInput(myActionServerThreadName, inputLine);
+    		  mySharedYahtzeeStateObject.acquireLock();  
+    		  outputLine = mySharedYahtzeeStateObject.processInput(myYahtzeeServerThreadName, inputLine);
     		  out.println(outputLine);
-    		  mySharedActionStateObject.releaseLock();  
+    		  mySharedYahtzeeStateObject.releaseLock();  
     	  } 
     	  catch(InterruptedException e) {
     		  System.err.println("Failed to get lock when reading:"+e);
@@ -45,7 +45,7 @@ public class YahtzeeServerThread extends Thread {
 
        out.close();
        in.close();
-       actionSocket.close();
+       YahtzeeSocket.close();
 
     } catch (IOException e) {
       e.printStackTrace();
